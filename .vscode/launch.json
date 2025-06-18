@@ -1,0 +1,112 @@
+import os
+import math
+import time
+
+def clear_screen():
+    os.system("cls" if os.name == "nt" else "clear")
+
+history = []  
+
+while True:
+    print("\nChoose an operation:")
+    print("a = add")
+    print("s = subtract")
+    print("d = divide")
+    print("m = multiply")
+    print("p = percentage")
+    print("r = square root")
+    print("sq = square numbers")
+    print("c = cubed number")
+    print("pw = to the power of ...")
+    print("h = history")
+    print("cl = clear screen")
+    print("t = time")
+    print("dt = date")
+    print("q = quit")
+
+    operation = input("What do you want to do? ").lower()
+
+    if operation == 'cl':
+        clear_screen()  
+        continue  
+
+    if operation == 'q':
+        print("Goodbye!")
+        break 
+
+    if operation in ['a', 's', 'd', 'm', 'p']:  
+        try:
+            number1 = float(input("What is the first number? "))
+            number2 = float(input("What is the second number? "))
+        except ValueError:
+            print("Error: Please enter a valid number.")
+            continue
+
+    match operation:
+        case 'a':
+            result = number1 + number2
+            print("Result:", result)
+        case 's':
+            result = number1 - number2
+            print("Result:", result)
+        case 'd':
+            if number2 == 0:
+                result = "Error: Can't divide by zero"
+            else:
+                result = round(number1 / number2, 2)
+            print("Result:", result)
+        case 'm':
+            result = number1 * number2
+            print("Result:", result)
+        case 'p':
+            if number2 == 0:
+                result = "Error: Can't get percentage with zero"
+            else:
+                result = round((number2 / number1) * 100, 2)
+            print("Result:", result, "%")
+        case 'r':
+            try:
+                num = float(input("Enter the number for the square root: "))
+                result = round(math.sqrt(num), 2)
+                print("Result:", result)
+            except ValueError:
+                print("Error: Please enter a valid number.")
+        case 'sq':
+            try:
+                num = float(input("Enter the number to square: "))
+                result = round(num ** 2, 2)
+                print("Result:", result)
+            except ValueError:
+                print("Error: Please enter a valid number.")
+        case 'c':
+            try:
+                num = float(input("Enter the number to cube: "))
+                result = round(num ** 3, 2)
+                print("Result:", result)
+            except ValueError:
+                print("Error: Please enter a valid number.")
+        case 'pw':
+            try:
+                base = float(input("Enter the base number: "))
+                exponent = float(input("Enter the exponent: "))
+                result = round(base ** exponent, 2)
+                print("Result:", result)
+            except ValueError:
+                print("Error: Please enter valid numbers.")
+        case 'h':
+            if history:
+                print("\nCalculation History:")
+                for entry in history:
+                    print(entry)
+            else:
+                print("History is empty.")
+        case 't':
+            print("Current time:", time.strftime("%H:%M:%S"))
+        case 'dt':
+            print("Current date:", time.strftime("%Y-%m-%d"))
+        case _:
+            print("Invalid operation.")
+            continue  
+
+    if operation in ['a', 's', 'd', 'm', 'p', 'r', 'sq', 'c', 'pw']:
+        history.append(f"{operation}: {result}")
